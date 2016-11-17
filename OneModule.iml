@@ -40,5 +40,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.1.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.1.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish:javax.faces:2.2.10" level="project" />
+    <orderEntry type="library" name="Maven: org.json:json:20151123" level="project" />
+    <orderEntry type="library" name="Maven: jstl:jstl:1.2" level="project" />
   </component>
 </module>

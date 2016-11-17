@@ -6,6 +6,11 @@
 
 <head>
   <title>Index Page</title>
+  <script src="/resources/jquery-2.1.4.min.js" type="text/javascript"></script>
+  <script src="/resources/gameBoard.js" type="text/javascript"></script>
+  <script src="/resources/bootstrap.min.js" type="text/javascript"></script>
+  <link href="/resources/bootstrap.min.css" rel="stylesheet">
+  <link href="/resources/bootstrap-theme.min.css" rel="stylesheet">
 </head>
 
 <body>

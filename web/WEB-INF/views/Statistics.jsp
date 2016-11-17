@@ -9,9 +9,13 @@
 <html>
 <head>
     <title>Статистика пользователей</title>
+  <script src="/resources/jquery-2.1.4.min.js" type="text/javascript"></script>
+  <script src="/resources/bootstrap.min.js" type="text/javascript"></script>
+  <link href="/resources/bootstrap.min.css" rel="stylesheet">
+  <link href="/resources/bootstrap-theme.min.css" rel="stylesheet">
 </head>
 <body>
-<table>
+<table class="table table-striped table-hover">
   <thead>
   <tr>
     <td>Пользователь</td>

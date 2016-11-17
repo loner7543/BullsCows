@@ -1,6 +1,8 @@
 package ru.javastudy.springMVC.model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -12,14 +14,16 @@ public class Game {
     private String secretNumber;//строовое представление загаданного числа
     private int partialMatch;//частичное совпадение
     private int fullMatch;//полное совпадение
+    private List<String> log;
 
     public Game(){
+        log = new LinkedList<>();
         random = new Random();
     }
 
 
 
-    private void generateNumber(){
+    public void generateNumber(){
         boolean contains;
         for (int i = 0;i<4;i++){
             do {
@@ -36,25 +40,32 @@ public class Game {
             }
             while (contains);
         }
-        secretNumber = String.valueOf(digits[0])+String.valueOf(digits[1])+String.valueOf(digits[2])+String.valueOf(digits[3]);
+        this.secretNumber = String.valueOf(digits[0])+String.valueOf(digits[1])+String.valueOf(digits[2])+String.valueOf(digits[3]);
     }
 
     //сравнивает загаданное и введенное число(1 попытка)
-    private void compare(String userVariant){
+    public void compare(String userVariant){
+        String res  = "";
         partialMatch =0;//cow
         fullMatch = 0;//bull
         char[] array = userVariant.toCharArray();
         for (int i = 0;i<4;i++){
-            /*if (secretNumber.contains(String.valueOf(array[i])))//
+            if (secretNumber.contains(String.valueOf(array[i])))//если
             {
-                if (secretNumber==array[i])
+                if (secretNumber.toCharArray()[i]==array[i])
                 {
                     fullMatch++;
                 }
                 else {
                     partialMatch++;
                 }
-            }*/
+            }
+        }
+        res = "Число "+userVariant+ " имеет "+fullMatch+" быков и "+partialMatch+" коров";
+        log.add(res);
+        if (fullMatch==4){
+            res = "Игра окончена. Вы выиграли";
+            log.add(res);
         }
     }
 
@@ -64,5 +75,9 @@ public class Game {
 
     public int getFullMatch() {
         return fullMatch;
+    }
+
+    public List<String> getLog() {
+        return log;
     }
 }
