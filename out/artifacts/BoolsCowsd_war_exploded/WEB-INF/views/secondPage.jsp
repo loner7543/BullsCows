@@ -8,5 +8,9 @@
 <br/>
 Введенный пароль: ${userJSP.password};
 <br/>
+<ul>
+    <li><a href="/show">Играть</a></li>
+    <li><a href="/showStat">Посмотреть статистику</a></li>
+</ul>
 </body>
 </html>

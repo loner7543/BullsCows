@@ -10,9 +10,6 @@ import ru.javastudy.springMVC.model.User;
 
 @Controller
 public class MainController {
-
-    /*First method on start application*/
-    /*Попадаем сюда на старте приложения (см. параметры аннтоции и настройки пути после деплоя) */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView main() {
         ModelAndView modelAndView = new ModelAndView();
@@ -22,20 +19,25 @@ public class MainController {
         return modelAndView;
     }
 
-    /*как только на index.jsp подтвердится форма
-    <spring:form method="post"  modelAttribute="userJSP" action="check-user">,
-    то попадем вот сюда
-     */
     @RequestMapping(value = "/check-user")
     public ModelAndView checkUser(@ModelAttribute("userJSP") User user) {
         ModelAndView modelAndView = new ModelAndView();
 
-        //имя представления, куда нужно будет перейти
         modelAndView.setViewName("secondPage");
-
-        //записываем в атрибут userJSP (используется на странице *.jsp объект user
         modelAndView.addObject("userJSP", user);
 
-        return modelAndView; //после уйдем на представление, указанное чуть выше, если оно будет найдено.
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/show")
+    public ModelAndView showGameBoard(){
+        ModelAndView modelAndView = new ModelAndView("GameBoard");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/showStat")
+    public ModelAndView showStat(){
+        ModelAndView modelAndView = new ModelAndView("Statistics");
+        return modelAndView;
     }
 }
