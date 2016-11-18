@@ -7,16 +7,36 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.javastudy.springMVC.model.Game;
 import ru.javastudy.springMVC.model.User;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 //123
 @Controller
 public class MainController {
     private Game game;
+    private DataSource ds;
+    private Connection connection;
     private boolean firstLoad = true;
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView main() {
+    public ModelAndView main() throws NamingException, SQLException {
+        Context ctx = new InitialContext();
+        try {
+            ds = (DataSource)ctx.lookup("java:comp/env/jdbc/Bulls");
+            connection = ds.getConnection();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         game = new Game();
         int i  =5;
         ModelAndView modelAndView = new ModelAndView();
+        PreparedStatement preparedStatement = (PreparedStatement) connection.createStatement();
         modelAndView.addObject("userJSP", new User());
         modelAndView.setViewName("index");
         return modelAndView;
