@@ -12,21 +12,22 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 //123
 @Controller
 public class MainController {
+    private static final String JNDI_NAME="java:comp/env/jdbc/Bulls";
+    private Context context;
     private Game game;
     private DataSource ds;
     private Connection connection;
     private boolean firstLoad = true;
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView main() throws NamingException, SQLException {
-        Context ctx = new InitialContext();
+        context = new InitialContext();
         try {
-            ds = (DataSource)ctx.lookup("java:comp/env/jdbc/Bulls");
+            ds = (DataSource)context.lookup(JNDI_NAME);
             connection = ds.getConnection();
         } catch (NamingException e) {
             e.printStackTrace();
@@ -36,7 +37,7 @@ public class MainController {
         game = new Game();
         int i  =5;
         ModelAndView modelAndView = new ModelAndView();
-        PreparedStatement preparedStatement = (PreparedStatement) connection.createStatement();
+        //PreparedStatement preparedStatement = (PreparedStatement) connection.createStatement();
         modelAndView.addObject("userJSP", new User());
         modelAndView.setViewName("index");
         return modelAndView;
@@ -80,6 +81,20 @@ public class MainController {
         String digits = jsonObject.getString("userDigit");
         game.compare(digits);
         ModelAndView modelAndView = new ModelAndView("GameBoard");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/registration",method = RequestMethod.POST,consumes = "application/json")
+    public @ResponseBody ModelAndView registration(@RequestBody String m){
+        JSONObject jsonObject = new JSONObject(m);
+        User user = new User(jsonObject.getString("login"),jsonObject.getString("pass"),0);
+        ModelAndView modelAndView = new ModelAndView();
+        return  modelAndView;
+    }
+
+    @RequestMapping(value = "/showRegistrationFom")
+    public ModelAndView showReg(){
+        ModelAndView modelAndView = new ModelAndView("Registration");
         return modelAndView;
     }
 }
