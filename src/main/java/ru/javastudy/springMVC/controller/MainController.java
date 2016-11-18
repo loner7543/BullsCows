@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.javastudy.springMVC.model.Game;
 import ru.javastudy.springMVC.model.User;
 
-
+//123
 @Controller
 public class MainController {
     private Game game;
@@ -15,6 +15,7 @@ public class MainController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView main() {
         game = new Game();
+        int i  =5;
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userJSP", new User());
         modelAndView.setViewName("index");
