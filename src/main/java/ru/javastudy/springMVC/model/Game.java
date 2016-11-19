@@ -15,10 +15,12 @@ public class Game {
     private int partialMatch;//частичное совпадение
     private int fullMatch;//полное совпадение
     private List<String> log;
+    private User user;
 
-    public Game(){
+    public Game(User u){
         log = new LinkedList<>();
         random = new Random();
+        this.user = u;
     }
 
 

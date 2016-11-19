@@ -4,8 +4,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.javastudy.springMVC.model.Game;
-import ru.javastudy.springMVC.model.User;
+import ru.javastudy.springMVC.model.*;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -13,6 +12,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 //123
 @Controller
@@ -21,21 +21,21 @@ public class MainController {
     private Context context;
     private Game game;
     private DataSource ds;
-    private Connection connection;
+    private UserDAOImpl userDAO;
     private boolean firstLoad = true;
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView main() throws NamingException, SQLException {
         context = new InitialContext();
         try {
             ds = (DataSource)context.lookup(JNDI_NAME);
-            connection = ds.getConnection();
         } catch (NamingException e) {
             e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        game = new Game();
-        int i  =5;
+         userDAO =new UserDAOImpl(ds);
+        //ArrayList<User> l = userDAO.getAllUser();
+        //User user = new User(3,"gff","dfffsa");
+        //userDAO.insertUser(user);
+        game = new Game(new User());
         ModelAndView modelAndView = new ModelAndView();
         //PreparedStatement preparedStatement = (PreparedStatement) connection.createStatement();
         modelAndView.addObject("userJSP", new User());
@@ -72,6 +72,8 @@ public class MainController {
     @RequestMapping(value = "/showStat")
     public ModelAndView showStat(){
         ModelAndView modelAndView = new ModelAndView("Statistics");
+        ArrayList<StatisticsData> allStat = userDAO.getStat();
+        modelAndView.addObject("statistics",allStat);
         return modelAndView;
     }
 
@@ -87,7 +89,7 @@ public class MainController {
     @RequestMapping(value = "/registration",method = RequestMethod.POST,consumes = "application/json")
     public @ResponseBody ModelAndView registration(@RequestBody String m){
         JSONObject jsonObject = new JSONObject(m);
-        User user = new User(jsonObject.getString("login"),jsonObject.getString("pass"),0);
+        User user = new User(1,jsonObject.getString("login"),jsonObject.getString("pass"));
         ModelAndView modelAndView = new ModelAndView();
         return  modelAndView;
     }

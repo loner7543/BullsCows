@@ -30,3 +30,5 @@ function SendData(){
     }
 
 }
+
+function onClear(){}

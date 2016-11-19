@@ -6,16 +6,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class User {
 
+    private int Id;
     private String name;
     private String password;
-    private int score;
 
     public User(){}
 
-    public User(String name, String password, int score) {
+
+    public User(int id,String name, String password) {
+        this.Id = id;
         this.name = name;
         this.password = password;
-        this.score = score;
     }
 
     public String getName() {
@@ -34,11 +35,12 @@ public class User {
         this.password = password;
     }
 
-    public int getScore() {
-        return score;
+
+    public int getId() {
+        return Id;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setId(int id) {
+        Id = id;
     }
 }

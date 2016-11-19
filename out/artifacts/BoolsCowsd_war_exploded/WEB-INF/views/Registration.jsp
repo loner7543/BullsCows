@@ -18,7 +18,7 @@
 <body>
       <label>Введите Ваше имя</label><input type="text" id="userName"><br>
       <label>Введите Ваш пароль</label><input type="text" id="userPassword"><br>
-      <label>Повторите введенный пароль</label><input type="text" id="retypePassword">
-      <input type="button" value="Зарегистрироваться" onclick="SendData()">
+      <label>Повторите введенный пароль</label><input type="text" id="retypePassword"><br>
+      <input type="button" value="Зарегистрироваться" onclick="SendData()"><input type="button" value="Очистить" onclick="onClear()">
 </body>
 </html>
