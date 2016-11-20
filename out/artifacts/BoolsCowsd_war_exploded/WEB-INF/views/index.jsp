@@ -13,10 +13,11 @@
 </head>
 
 <body>
-
+  <div id="signInForm">
   Name: <input type="text" id="name"><br/>
   Password: <input type="text" id="pass">  <br/>
 <input type="button" value="Войти" onclick="signIn()">
+  </div>
 
 </body>
 

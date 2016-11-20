@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
     <title>Статистика пользователей</title>
@@ -18,12 +19,13 @@
 <table class="table table-striped table-hover">
   <thead>
   <tr>
-    <th>Пользователь</th><th>Среднее число попыток до угадывания</th>
+    <th>Статистические показатели</th>>
   </tr>
   </thead>
   <c:forEach items="${statistics}" var="s">
-    <td>${s.getUser().getName()}</td>
-    <td>${s.getAverageAttempt()}</td>
+    <tr>
+    <td>${s.toString()}</td>
+    </tr>
   </c:forEach>
 </table>
 </body>

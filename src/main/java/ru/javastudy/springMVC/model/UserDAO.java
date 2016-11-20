@@ -12,7 +12,7 @@ public interface UserDAO {
     public ArrayList<User> getAllUser();
     public int getUserAttempts(User user);
     public User checkUser(User user);
-    public void  insertUser(User user);
+    public User  insertUser(User user);
     public void insetAttempt(int attempt,User user);
     public ArrayList<StatisticsData> getStat();
     public int sunAttempts();

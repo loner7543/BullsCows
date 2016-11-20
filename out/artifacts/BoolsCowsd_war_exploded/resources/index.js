@@ -6,7 +6,6 @@ Url="check-user"
 function signIn() {
     var name = document.getElementById("name").value;
     var pass =document.getElementById("pass").value;
-    var  d = 22;
     var data = {
         login: name,
         password: pass

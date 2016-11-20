@@ -91,12 +91,12 @@ public class MainController {
     }
 
     @RequestMapping(value = "/registration",method = RequestMethod.POST,consumes = "application/json")
-    public @ResponseBody ModelAndView registration(@RequestBody String m){
+    public ResponseEntity<Object>registration(@RequestBody String m){
         JSONObject jsonObject = new JSONObject(m);
         User user = new User(jsonObject.getString("login"),jsonObject.getString("pass"));
-        userDAO.insertUser(user);
-        ModelAndView modelAndView = new ModelAndView();
-        return  modelAndView;
+        User newUser = userDAO.insertUser(user);
+        game = new Game(newUser,userDAO);
+        return  ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @RequestMapping(value = "/showRegistrationFom")

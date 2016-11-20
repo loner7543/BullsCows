@@ -17,6 +17,7 @@
 </head>
 <body>
 <div id="registrationForm">
+    <p>Вы не зарегистрированы. Предлагаем пройти регистрацию</p>
       <label>Введите Ваше имя</label><input type="text" id="userName" max="20"><br>
       <label>Введите Ваш пароль</label><input type="text" id="userPassword" max="20"><br>
       <label>Повторите введенный пароль</label><input type="text" id="retypePassword" maxlength="20"><br>

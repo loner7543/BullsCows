@@ -48,27 +48,30 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void insertUser(User user) {
-        sqlQuery = "insert into userr values(?,?,?)";
+    public User insertUser(User user) {
         int newId = generateId(UserDAO.USER_TABLE);
+        sqlQuery = "insert into userr values(?,?,?)";
         MyTemplate.update(sqlQuery,new Object[]{newId,user.getName(),user.getPassword()});
+        user.setId(newId);
+        return user;
     }
 
     @Override
     public void insetAttempt(int attempt, User user) {
-        sqlQuery = "insert into attempt values(?,?,?)";
         int newId= generateId(UserDAO.ATTEMPT_TABLE);
+        sqlQuery = "insert into attempt values(?,?,?)";
         MyTemplate.update(sqlQuery,new Object[]{newId,attempt,user.getId()});
     }
 
     @Override
     public ArrayList<StatisticsData> getStat() {
         ArrayList<StatisticsData> data = new ArrayList<>();
-        int at;
+        double at= (double)sunAttempts();;
         ArrayList<User> users = getAllUser();
         for (User user:users){
-            at = sunAttempts();
-            StatisticsData statisticsData = new StatisticsData(user,getUserAttempts(user)/at);
+            double userAt = (double)getUserAttempts(user);
+            double val = userAt/at;
+            StatisticsData statisticsData = new StatisticsData(user,val);
             data.add(statisticsData);
         }
 

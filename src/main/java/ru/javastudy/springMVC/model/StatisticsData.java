@@ -5,9 +5,9 @@ package ru.javastudy.springMVC.model;
  */
 public class StatisticsData {
     private  User user;
-    private  int averageAttempt;
+    private  double averageAttempt;
 
-    public StatisticsData(User user, int averageAttempt) {
+    public StatisticsData(User user, double averageAttempt) {
         this.user = user;
         this.averageAttempt = averageAttempt;
     }
@@ -20,11 +20,16 @@ public class StatisticsData {
         this.user = user;
     }
 
-    public int getAverageAttempt() {
+    public double getAverageAttempt() {
         return averageAttempt;
     }
 
-    public void setAverageAttempt(int averageAttempt) {
+    public void setAverageAttempt(double averageAttempt) {
         this.averageAttempt = averageAttempt;
+    }
+
+    @Override
+    public String toString() {
+        return "Пользователь "+user.getName()+" Число попыток"+averageAttempt;
     }
 }
