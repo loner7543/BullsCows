@@ -12,7 +12,8 @@
   <link href="/resources/Game.css" rel="stylesheet">
 </head>
 <body>
-<label>Введите Ваш ваиант числа</label><input type="text" id="userDigit"><br>
+<p>Компьютер загадал четырехзнвчное число. Вам предлагается его отдагать</p>
+<label>Введите Ваш ваиант  числа</label><input type="text" id="userDigit" maxlength="4"><br>
 <input type="button" value="Угадать" onclick="userAttempt()" class="btn-success btn-md"><br>
 <label>Предыдущие попытки</label>
 <ul id="attemptList">

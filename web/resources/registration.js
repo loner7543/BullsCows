@@ -37,4 +37,11 @@ function SendData(){
 
 }
 
-function onClear(){}
+function onClear(){
+    var  userName = document.getElementById("userName");
+    var  password = document.getElementById("userPassword");
+    var  retypePassword = document.getElementById("retypePassword");
+    userName.value = "";
+    password.value = "";
+    retypePassword.value = "";
+}

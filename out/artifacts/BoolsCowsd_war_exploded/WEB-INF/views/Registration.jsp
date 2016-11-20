@@ -18,9 +18,9 @@
 <body>
 <div id="registrationForm">
     <p>Вы не зарегистрированы. Предлагаем пройти регистрацию</p>
-      <label>Введите Ваше имя</label><input type="text" id="userName" max="20"><br>
-      <label>Введите Ваш пароль</label><input type="text" id="userPassword" max="20"><br>
-      <label>Повторите введенный пароль</label><input type="text" id="retypePassword" maxlength="20"><br>
+      <label>Введите Ваше имя</label><input type="text" id="userName" maxlength="20" placeholder="Не более 20 символов"><br>
+      <label>Введите Ваш пароль</label><input type="password" id="userPassword" maxlength="20" placeholder="Не более 20 символов"><br>
+      <label>Повторите введенный пароль</label><input type="password" id="retypePassword" maxlength="20" placeholder="Не более 20 символов"><br>
       <input type="button" value="Зарегистрироваться" onclick="SendData()"><input type="button" value="Очистить" onclick="onClear()">
 </div>
 </body>
