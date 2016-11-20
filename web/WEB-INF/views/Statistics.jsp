@@ -18,14 +18,13 @@
 <table class="table table-striped table-hover">
   <thead>
   <tr>
-    <td>Пользователь</td>
-    <td>Среднее число попыток до угадывания</td>
+    <th>Пользователь</th><th>Среднее число попыток до угадывания</th>
   </tr>
-
   </thead>
-  <tbody>
-
-  </tbody>
+  <c:forEach items="${statistics}" var="s">
+    <td>${s.getUser().getName()}</td>
+    <td>${s.getAverageAttempt()}</td>
+  </c:forEach>
 </table>
 </body>
 </html>

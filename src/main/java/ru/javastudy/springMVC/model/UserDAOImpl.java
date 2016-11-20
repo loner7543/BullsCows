@@ -35,14 +35,13 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean checkUser(User user) {
+    public User checkUser(User user) {//++
         ArrayList<User> all = getAllUser();
-        boolean rs = false;
+        User rs = null;
         for (User u:all){
-            if ((u.getPassword()==user.getPassword())&&(u.getName()==user.getName())){
-                rs =  true;
+            if ((u.getPassword().equals(user.getPassword()))&&(u.getName().equals(user.getName()))){
+                rs =u;
             }
-            else rs = false;
         }
 
         return rs;
@@ -51,7 +50,15 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void insertUser(User user) {
         sqlQuery = "insert into userr values(?,?,?)";
-        MyTemplate.update(sqlQuery,new Object[]{user.getId(),user.getName(),user.getPassword()});
+        int newId = generateId(UserDAO.USER_TABLE);
+        MyTemplate.update(sqlQuery,new Object[]{newId,user.getName(),user.getPassword()});
+    }
+
+    @Override
+    public void insetAttempt(int attempt, User user) {
+        sqlQuery = "insert into attempt values(?,?,?)";
+        int newId= generateId(UserDAO.ATTEMPT_TABLE);
+        MyTemplate.update(sqlQuery,new Object[]{newId,attempt,user.getId()});
     }
 
     @Override
@@ -61,7 +68,7 @@ public class UserDAOImpl implements UserDAO {
         ArrayList<User> users = getAllUser();
         for (User user:users){
             at = sunAttempts();
-            StatisticsData statisticsData = new StatisticsData(user,getUserAttempts(user)/sunAttempts());
+            StatisticsData statisticsData = new StatisticsData(user,getUserAttempts(user)/at);
             data.add(statisticsData);
         }
 
@@ -74,5 +81,12 @@ public class UserDAOImpl implements UserDAO {
         sqlQuery = "select sum(att_count) from attempt";
         int s = MyTemplate.queryForInt(sqlQuery);
         return s;
+    }
+
+    @Override
+    public int generateId(String tableName) {
+        sqlQuery = "select max(id) from "+tableName;
+        int id = MyTemplate.queryForInt(sqlQuery)+1;
+        return id;
     }
 }

@@ -4,10 +4,7 @@
     <title>Second Page</title>
 </head>
 <body>
-Введенное имя: ${userJSP.name};
-<br/>
-Введенный пароль: ${userJSP.password};
-<br/>
+<a href="/showRegistrationFom" class="btn btn-primary">Зарегистрироваться</a>
 <ul>
     <li><a href="/show">Играть</a></li>
     <li><a href="/showStat">Посмотреть статистику</a></li>

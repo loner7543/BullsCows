@@ -1,5 +1,6 @@
 package ru.javastudy.springMVC.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Random;
 /**
  * Created by Александр on 17.11.2016.
  */
-public class Game {
+public class Game implements Serializable {
     private Random random;
     private int[] digits = new int[4];//список для 4х цифр загаданноего числа
     private String secretNumber;//строовое представление загаданного числа
@@ -16,11 +17,15 @@ public class Game {
     private int fullMatch;//полное совпадение
     private List<String> log;
     private User user;
+    private int attemptAmount;
+    private UserDAOImpl dao;
 
-    public Game(User u){
+
+    public Game(User u,UserDAOImpl d){
         log = new LinkedList<>();
         random = new Random();
         this.user = u;
+        this.dao = d;
     }
 
 
@@ -47,6 +52,7 @@ public class Game {
 
     //сравнивает загаданное и введенное число(1 попытка)
     public void compare(String userVariant){
+        attemptAmount++;
         String res  = "";
         partialMatch =0;//cow
         fullMatch = 0;//bull
@@ -67,6 +73,8 @@ public class Game {
         log.add(res);
         if (fullMatch==4){
             res = "Игра окончена. Вы выиграли";
+            dao.insetAttempt(attemptAmount,user);
+            attemptAmount = 0;
             log.add(res);
         }
     }
@@ -82,4 +90,13 @@ public class Game {
     public List<String> getLog() {
         return log;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

@@ -1,20 +1,24 @@
 package ru.javastudy.springMVC.controller;
 
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.javastudy.springMVC.model.*;
+import ru.javastudy.springMVC.model.Game;
+import ru.javastudy.springMVC.model.StatisticsData;
+import ru.javastudy.springMVC.model.User;
+import ru.javastudy.springMVC.model.UserDAOImpl;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Objects;
 
-//123
 @Controller
 public class MainController {
     private static final String JNDI_NAME="java:comp/env/jdbc/Bulls";
@@ -23,34 +27,34 @@ public class MainController {
     private DataSource ds;
     private UserDAOImpl userDAO;
     private boolean firstLoad = true;
+    private boolean f = true;
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView main() throws NamingException, SQLException {
         context = new InitialContext();
-        try {
-            ds = (DataSource)context.lookup(JNDI_NAME);
-        } catch (NamingException e) {
-            e.printStackTrace();
-        }
+        ds = (DataSource)context.lookup(JNDI_NAME);
          userDAO =new UserDAOImpl(ds);
-        //ArrayList<User> l = userDAO.getAllUser();
-        //User user = new User(3,"gff","dfffsa");
-        //userDAO.insertUser(user);
-        game = new Game(new User());
+
+        //game = new Game(new User(),userDAO);
         ModelAndView modelAndView = new ModelAndView();
-        //PreparedStatement preparedStatement = (PreparedStatement) connection.createStatement();
-        modelAndView.addObject("userJSP", new User());
+        //modelAndView.addObject("userJSP", new User());
         modelAndView.setViewName("index");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/check-user")
-    public ModelAndView checkUser(@ModelAttribute("userJSP") User user) {
+    @RequestMapping(value = "/check-user",method = RequestMethod.POST,consumes = "application/json")
+    public ResponseEntity<Object> checkUser(@RequestBody String m){
+        JSONObject object = new JSONObject(m);
+        User user = new User(object.getString("login"),object.getString("password"));
         ModelAndView modelAndView = new ModelAndView();
-
-        modelAndView.setViewName("secondPage");
-        modelAndView.addObject("userJSP", user);
-
-        return modelAndView;
+        User check = userDAO.checkUser(user);
+        if (check==null) { //негативный кейс - нужна регистрация - пользователя с таккими данными  нет в бд
+            return   ResponseEntity.status(HttpStatus.UNAUTHORIZED ).body(null);
+        }
+        else {
+            game = new Game(check,userDAO);
+            game.generateNumber();
+            return   ResponseEntity.status(HttpStatus.OK).body(null);
+        }
     }
 
     @RequestMapping(value = "/show")
@@ -89,7 +93,8 @@ public class MainController {
     @RequestMapping(value = "/registration",method = RequestMethod.POST,consumes = "application/json")
     public @ResponseBody ModelAndView registration(@RequestBody String m){
         JSONObject jsonObject = new JSONObject(m);
-        User user = new User(1,jsonObject.getString("login"),jsonObject.getString("pass"));
+        User user = new User(jsonObject.getString("login"),jsonObject.getString("pass"));
+        userDAO.insertUser(user);
         ModelAndView modelAndView = new ModelAndView();
         return  modelAndView;
     }
