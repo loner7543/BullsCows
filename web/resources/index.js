@@ -23,10 +23,10 @@ function signIn() {
         error: function (jqXHR, textStatus, errorThrown) {
             if(jqXHR.status==200)
             {
-                window.location = "http://localhost:8081/show"
+                window.location = window.location.href+"show"
             }
             else{
-                window.location = "http://localhost:8081/showRegistrationFom"
+                window.location = window.location.href+"showRegistrationFom"
             }
         }
 

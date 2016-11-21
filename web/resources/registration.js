@@ -25,7 +25,8 @@ function SendData(){
                 console.log(data);
                 if(jqXHR.status==200)
                 {
-                    window.location = "http://localhost:8081/show"
+                    var path  = "http://"+window.location.hostname+":"+window.location.port+"/show"
+                    window.location = path
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {

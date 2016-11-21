@@ -17,23 +17,24 @@
 
 <form class="form-horizontal" role="form">
   <div class="form-group">
-    <label class="col-sm-2 control-label">Email</label>
+    <label class="col-sm-2 control-label">Логин</label>
     <div class="col-sm-5">
-      <p class="form-control-static">email@example.com</p>
+      <input type="text" class="form-control" id="name" placeholder="Ваш логин">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="pass" class="col-sm-2 control-label">Пароль</label>
+    <div class="col-sm-5">
+      <input type="password" class="form-control" id="pass" placeholder="Ваш пароль">
     </div>
   </div>
   <div class="form-group">
-    <label for="inputPassword" class="col-sm-2 control-label">Пароль</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-    </div>
+  <input type="button" value="Войти" onclick="signIn()" class="col-md-1 col-md-offset-2 btn btn-primary">
   </div>
 </form>
-  <div id="signInForm" class="center-block">
-  Name: <input type="text" id="name"><br/>
-  Password: <input type="text" id="pass">  <br/>
-<input type="button" value="Войти" onclick="signIn()">
-  </div>
+
+
 
 </body>
 
